@@ -1,6 +1,6 @@
 # Fakecord
 
-A Discord-style dashboard for monitoring multiple channels and DMs in movable windows. Includes grid/freeform layouts, saved workspaces, live messages, profile activity, and gateway output.
+A dashboard for monitoring multiple channels and DMs on Discord in movable windows. Includes grid/freeform layouts, saved workspaces, live messages, profile activity, and gateway output.
 
 ## Setup
 
