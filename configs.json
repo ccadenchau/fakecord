@@ -1,0 +1,9 @@
+{
+    "ttl": {
+        "all": 60,
+        "guilds": 600,
+        "dms": 600,
+        "me": 300,
+        "guild_channels": 600
+    }
+}

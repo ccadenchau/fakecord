@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fakecord</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/vendor/gridstack/gridstack.min.css">
+  <link rel="stylesheet" href="/static/css/style.css?v=20261013-profile-activity-7">
+  <link rel="stylesheet" href="/static/css/workspace.css?v=20261013-profile-activity-7">
+  <link rel="stylesheet" href="/static/css/messages.css?v=20261013-profile-activity-7">
+  <script src="/static/vendor/gridstack/gridstack-all.js" defer></script>
+  <script src="/static/js/freeform.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/workspace.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/channel-icons.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/sidebar.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/vendor/markdown-it/markdown-it.min.js" defer></script>
+  <script src="/static/js/message-format.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/message-dots.js?v=20261013-dots" defer></script>
+  <script src="/static/js/messages.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/profile-modal.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/profile.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/workspace-tabs.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/gateway-output.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/global-feed.js?v=20261013-profile-activity-7" defer></script>
+  <script src="/static/js/app.js?v=20261013-profile-activity-7" defer></script>
+</head>
+<body>
+  <div class="app">
+    <nav class="guild-rail" aria-label="Servers">
+      <button id="dm-home" type="button" class="brand" aria-label="Direct messages" aria-pressed="false">
+        <svg class="dm-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 11.5a8 8 0 0 1-8 8H4l1.7-4.1A8 8 0 1 1 20 11.5Z"/>
+          <path d="M8 9h8M8 13h5"/>
+        </svg>
+      </button>
+      <div class="rail-divider"></div>
+      <div id="guild-list" class="guild-list"></div>
+      <button id="refresh-guilds" class="refresh-guilds" type="button" aria-label="Refresh guilds" data-tooltip="Refresh guilds">↻</button>
+    </nav>
+    <aside id="channel-sidebar" class="channel-sidebar" aria-label="Channels">
+      <header class="guild-header">
+        <h1 id="guild-name"></h1>
+        <div class="category-controls" role="group" aria-label="Channel categories">
+          <button id="collapse-categories" type="button" aria-label="Collapse all categories" data-tooltip="Collapse all" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 9 5-5 5 5M7 15l5 5 5-5"/></svg></button>
+          <button id="expand-categories" type="button" aria-label="Expand all categories" data-tooltip="Expand all" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 4 5 5 5-5M7 20l5-5 5 5"/></svg></button>
+        </div>
+        <button id="refresh-dms" class="refresh-dms" type="button" aria-label="Refresh DMs" data-tooltip="Refresh DMs" hidden>↻</button>
+      </header>
+      <div id="guild-banner" class="guild-banner" hidden><strong id="guild-banner-name"></strong></div>
+      <nav id="channel-list" class="channel-list" aria-label="Text channels"></nav>
+      <footer class="user-panel" aria-label="Your profile">
+        <div id="profile-avatar" class="avatar self" role="button" tabindex="0" aria-label="View your profile"><span id="profile-initial">?</span></div>
+        <div class="profile-info"><strong id="profile-name">Loading profile…</strong><small id="profile-username"></small></div>
+      </footer>
+      <div id="sidebar-resizer" class="sidebar-resizer" role="separator" aria-label="Resize channel sidebar" aria-orientation="vertical" aria-controls="channel-sidebar" tabindex="0"></div>
+    </aside>
+    <main class="workspace-shell">
+      <header class="workspace-toolbar">
+        <div class="workspace-tabs-bar">
+          <div id="workspace-tabs" role="tablist" aria-label="Workspaces"></div>
+          <button id="add-workspace" type="button" aria-label="New workspace" data-tooltip="New workspace">＋</button>
+        </div>
+        <span id="message-connection" role="status" aria-live="polite"></span>
+        <span id="workspace-status" role="status"></span>
+        <div class="workspace-view-controls">
+          <button id="toggle-global" type="button" aria-pressed="false">Global</button>
+          <button id="toggle-output" type="button" aria-pressed="false">Output</button>
+          <div class="layout-controls" role="group" aria-label="Window layout">
+            <button type="button" data-layout="freeform">Freeform</button>
+            <button type="button" data-layout="grid">Grid</button>
+          </div>
+        </div>
+        <form id="workspace-editor" hidden><input id="workspace-name" aria-label="Workspace name" maxlength="40" required></form>
+      </header>
+      <div class="workspace-viewport" id="workspace-viewport">
+        <section id="workspace" class="grid-stack" aria-label="Channel windows"></section>
+        <p id="empty-workspace" class="empty-workspace" hidden>Open a channel</p>
+      </div>
+      <section id="gateway-output" class="gateway-output" aria-label="Gateway output" hidden>
+        <header><strong>Gateway</strong><button id="pause-output" type="button">Pause</button><button id="clear-output" type="button">Clear</button><button id="close-output" type="button" aria-label="Close output">×</button></header>
+        <div id="gateway-lines" class="gateway-lines" tabindex="0" aria-label="Raw gateway events"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
